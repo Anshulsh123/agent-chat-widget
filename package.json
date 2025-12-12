@@ -1,4 +1,7 @@
 {
+  "scripts": {
+  "deploy": "npm run build && gh-pages -d dist"
+}
   "name": "agent-chat-window",
   "version": "1.0.0",
   "description": "A beautiful React component for AI agent chat interface with canvas panel support",
