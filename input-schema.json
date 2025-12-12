@@ -1,0 +1,166 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentChatWindow Input Schema",
+  "description": "Complete input schema for AgentChatWindow component to render agent chat interface with messages and canvas panel content",
+  "type": "object",
+  "required": ["messages"],
+  "properties": {
+    "messages": {
+      "type": "array",
+      "description": "Array of chat messages between user and agent",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "required": ["id", "role", "content", "timestamp"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the message"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["user", "agent"],
+            "description": "Role of the message sender - 'user' for user messages, 'agent' for AI agent messages"
+          },
+          "content": {
+            "type": "string",
+            "description": "Text content of the message"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Timestamp in human-readable format (e.g., '10:30 AM', '2:45 PM') or ISO 8601 format",
+            "examples": ["10:30 AM", "2:45 PM", "2024-12-12T10:30:00Z"]
+          },
+          "tableHtml": {
+            "type": "string",
+            "description": "Optional HTML content to display in the canvas panel. Can include tables, charts, formatted content, etc."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Optional metadata for additional message properties",
+            "properties": {
+              "isTyping": {
+                "type": "boolean",
+                "description": "Whether the agent is currently typing (for typing indicators)",
+                "default": false
+              },
+              "canvasTitle": {
+                "type": "string",
+                "description": "Title to display in the canvas panel when this message has tableHtml content"
+              },
+              "actions": {
+                "type": "array",
+                "description": "Optional array of action buttons associated with this message",
+                "items": {
+                  "type": "object",
+                  "required": ["label", "action"],
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "description": "Display text for the action button"
+                    },
+                    "action": {
+                      "type": "string",
+                      "description": "Action identifier or type"
+                    },
+                    "payload": {
+                      "type": "object",
+                      "description": "Optional payload data for the action"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "initialState": {
+      "type": "object",
+      "description": "Initial state configuration for the component",
+      "properties": {
+        "isCanvasOpen": {
+          "type": "boolean",
+          "description": "Whether the canvas panel should be open initially",
+          "default": false
+        },
+        "canvasContent": {
+          "type": "string",
+          "description": "Initial HTML content to display in the canvas panel"
+        },
+        "canvasTitle": {
+          "type": "string",
+          "description": "Initial title for the canvas panel",
+          "default": "Canvas"
+        }
+      }
+    },
+    "config": {
+      "type": "object",
+      "description": "Component configuration options",
+      "properties": {
+        "agentName": {
+          "type": "string",
+          "description": "Display name for the AI agent in the header",
+          "default": "AI Agent"
+        },
+        "agentStatus": {
+          "type": "string",
+          "description": "Status text displayed below the agent name in the header",
+          "default": "Online • Ready to assist"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text for the message input field",
+          "default": "Type your message... (Press Enter to send, Shift+Enter for new line)"
+        },
+        "showCanvasToggle": {
+          "type": "boolean",
+          "description": "Whether to show the canvas toggle button in the header",
+          "default": true
+        },
+        "canvasWidth": {
+          "type": "string",
+          "description": "Width of the canvas panel as a CSS value (e.g., '24rem', '400px', '30%')",
+          "default": "24rem"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "messages": [
+        {
+          "id": "1",
+          "role": "agent",
+          "content": "Hello! How can I help you?",
+          "timestamp": "10:30 AM"
+        }
+      ]
+    },
+    {
+      "messages": [
+        {
+          "id": "1",
+          "role": "user",
+          "content": "Show me sales data",
+          "timestamp": "10:31 AM"
+        },
+        {
+          "id": "2",
+          "role": "agent",
+          "content": "Here's the sales data:",
+          "timestamp": "10:31 AM",
+          "tableHtml": "<table><thead><tr><th>Product</th><th>Sales</th></tr></thead><tbody><tr><td>Product A</td><td>$50,000</td></tr></tbody></table>",
+          "metadata": {
+            "canvasTitle": "Sales Data"
+          }
+        }
+      ],
+      "config": {
+        "agentName": "Data Analyst",
+        "agentStatus": "Analyzing data..."
+      }
+    }
+  ]
+}
