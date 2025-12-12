@@ -132,29 +132,42 @@ const sampleTableHtml = `
 
 
 
-const AgentChatWindow = () => {
+interface AgentChatWindowProps {
+  initialData?: {
+    messages?: Message[];
+    initialState?: {
+      isCanvasOpen?: boolean;
+      canvasTitle?: string;
+    };
+    config?: {
+      agentName?: string;
+      agentStatus?: string;
+    };
+  };
+}
 
-  const [messages, setMessages] = useState<Message[]>([
+const AgentChatWindow = ({ initialData }: AgentChatWindowProps = {}) => {
+  const defaultMessage: Message = {
+    id: "1",
+    role: "agent",
+    content: "Hello! I'm your AI agent. I can help you analyze data and display results in the canvas panel. Try asking me to show you some company data!",
+    timestamp: "10:30 AM",
+  };
 
-    {
+  const [messages, setMessages] = useState<Message[]>(
+    initialData?.messages || [defaultMessage]
+  );
 
-      id: "1",
-
-      role: "agent",
-
-      content: "Hello! I'm your AI agent. I can help you analyze data and display results in the canvas panel. Try asking me to show you some company data!",
-
-      timestamp: "10:30 AM",
-
-    },
-
-  ]);
-
-  const [isCanvasOpen, setIsCanvasOpen] = useState(false);
+  const [isCanvasOpen, setIsCanvasOpen] = useState(
+    initialData?.initialState?.isCanvasOpen || false
+  );
 
   const [currentTableHtml, setCurrentTableHtml] = useState("");
 
   const [isTyping, setIsTyping] = useState(false);
+  
+  const [agentName] = useState(initialData?.config?.agentName || "AI Agent");
+  const [agentStatus] = useState(initialData?.config?.agentStatus || "Online • Ready to assist");
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -173,6 +186,40 @@ const AgentChatWindow = () => {
     scrollToBottom();
 
   }, [messages]);
+
+  // Handle initial messages with tableHtml
+  useEffect(() => {
+    if (initialData?.messages) {
+      // Find the last message with tableHtml
+      const lastMessageWithTable = [...initialData.messages]
+        .reverse()
+        .find(msg => msg.tableHtml);
+      
+      if (lastMessageWithTable?.tableHtml) {
+        setCurrentTableHtml(lastMessageWithTable.tableHtml);
+        if (initialData.initialState?.isCanvasOpen !== false) {
+          setIsCanvasOpen(true);
+        }
+      }
+    }
+  }, [initialData]);
+
+  // Handle initial messages with tableHtml
+  useEffect(() => {
+    if (initialData?.messages) {
+      // Find the last message with tableHtml
+      const lastMessageWithTable = [...initialData.messages]
+        .reverse()
+        .find(msg => msg.tableHtml);
+      
+      if (lastMessageWithTable?.tableHtml) {
+        setCurrentTableHtml(lastMessageWithTable.tableHtml);
+        if (initialData.initialState?.isCanvasOpen !== false) {
+          setIsCanvasOpen(true);
+        }
+      }
+    }
+  }, [initialData]);
 
 
 
@@ -298,9 +345,9 @@ const AgentChatWindow = () => {
 
             <div>
 
-              <h1 className="font-semibold text-foreground">AI Agent</h1>
+              <h1 className="font-semibold text-foreground">{agentName}</h1>
 
-              <p className="text-xs text-muted-foreground">Online • Ready to assist</p>
+              <p className="text-xs text-muted-foreground">{agentStatus}</p>
 
             </div>
 
@@ -418,7 +465,7 @@ const AgentChatWindow = () => {
 
         htmlContent={currentTableHtml}
 
-        title="Company Data"
+        title={initialData?.initialState?.canvasTitle || "Company Data"}
 
       />
 
