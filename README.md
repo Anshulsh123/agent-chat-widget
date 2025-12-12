@@ -50,6 +50,29 @@ npm run build
 
 The component uses Tailwind CSS with CSS variables for easy theming. You can customize colors, spacing, and other design tokens in `src/index.css` and `tailwind.config.js`.
 
+## Publishing to GitHub
+
+To publish this component to GitHub:
+
+1. Create a new repository on GitHub:
+   - Go to https://github.com/new
+   - Repository name: `agent-chat-widget`
+   - Description: "A beautiful React component for AI agent chat interface with canvas panel support"
+   - Choose **Public**
+   - **DO NOT** initialize with README, .gitignore, or license
+   - Click "Create repository"
+
+2. Run the setup script:
+   ```bash
+   ./setup-github.sh
+   ```
+
+   Or manually:
+   ```bash
+   git remote add origin https://github.com/YOUR_USERNAME/agent-chat-widget.git
+   git push -u origin main
+   ```
+
 ## License
 
 MIT
