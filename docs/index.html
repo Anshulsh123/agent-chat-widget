@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: hsl(0 0% 98%);
+            padding: 20px;
+            color: hsl(222.2 84% 4.9%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: hsl(222.2 84% 4.9%);
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 16px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        thead {
+            background: hsl(210 40% 96.1%);
+        }
+        
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            color: hsl(222.2 84% 4.9%);
+            border-bottom: 2px solid hsl(214.3 31.8% 91.4%);
+        }
+        
+        td {
+            padding: 12px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid hsl(214.3 31.8% 91.4%);
+            color: hsl(222.2 84% 4.9%);
+        }
+        
+        tbody tr:hover {
+            background: hsl(210 40% 98%);
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Preserve inline styles from tableHtml */
+        table span {
+            font-weight: 500;
+        }
+        
+        .error {
+            color: hsl(0 84.2% 60.2%);
+            padding: 16px;
+            background: hsl(0 84.2% 60.2% / 0.1);
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: hsl(215.4 16.3% 46.9%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">Data Table</h1>
+        <div id="content" class="table-wrapper">
+            <div class="loading">Loading table...</div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Get data from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const encoded = urlParams.get('encoded');
+            const dataParam = urlParams.get('data');
+            const htmlParam = urlParams.get('html');
+            const titleParam = urlParams.get('title');
+            
+            const contentDiv = document.getElementById('content');
+            const titleDiv = document.getElementById('title');
+            
+            // Set title if provided
+            if (titleParam) {
+                titleDiv.textContent = decodeURIComponent(titleParam);
+            }
+            
+            // Method 1: Direct HTML parameter
+            if (htmlParam) {
+                try {
+                    const html = decodeURIComponent(htmlParam);
+                    contentDiv.innerHTML = html;
+                    return;
+                } catch (e) {
+                    contentDiv.innerHTML = '<div class="error">Error decoding HTML: ' + e.message + '</div>';
+                    return;
+                }
+            }
+            
+            // Method 2: Base64 encoded JSON
+            if (encoded) {
+                try {
+                    const decoded = atob(encoded);
+                    const data = JSON.parse(decoded);
+                    
+                    // Extract tableHtml from messages
+                    let tableHtml = null;
+                    let canvasTitle = titleParam || 'Data Table';
+                    
+                    if (data.messages && Array.isArray(data.messages)) {
+                        // Find last message with tableHtml
+                        for (let i = data.messages.length - 1; i >= 0; i--) {
+                            if (data.messages[i].tableHtml) {
+                                tableHtml = data.messages[i].tableHtml;
+                                if (data.messages[i].metadata && data.messages[i].metadata.canvasTitle) {
+                                    canvasTitle = data.messages[i].metadata.canvasTitle;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // Or get from initialState
+                    if (!tableHtml && data.initialState && data.initialState.canvasContent) {
+                        tableHtml = data.initialState.canvasContent;
+                        if (data.initialState.canvasTitle) {
+                            canvasTitle = data.initialState.canvasTitle;
+                        }
+                    }
+                    
+                    // Or get direct tableHtml property
+                    if (!tableHtml && data.tableHtml) {
+                        tableHtml = data.tableHtml;
+                    }
+                    
+                    if (tableHtml) {
+                        titleDiv.textContent = canvasTitle;
+                        contentDiv.innerHTML = tableHtml;
+                    } else {
+                        contentDiv.innerHTML = '<div class="error">No table HTML found in the data. Please provide tableHtml in your JSON.</div>';
+                    }
+                } catch (e) {
+                    contentDiv.innerHTML = '<div class="error">Error parsing data: ' + e.message + '</div>';
+                }
+                return;
+            }
+            
+            // Method 3: Direct JSON in data parameter
+            if (dataParam) {
+                try {
+                    const data = JSON.parse(decodeURIComponent(dataParam));
+                    
+                    let tableHtml = null;
+                    let canvasTitle = titleParam || 'Data Table';
+                    
+                    if (data.messages && Array.isArray(data.messages)) {
+                        for (let i = data.messages.length - 1; i >= 0; i--) {
+                            if (data.messages[i].tableHtml) {
+                                tableHtml = data.messages[i].tableHtml;
+                                if (data.messages[i].metadata && data.messages[i].metadata.canvasTitle) {
+                                    canvasTitle = data.messages[i].metadata.canvasTitle;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (!tableHtml && data.tableHtml) {
+                        tableHtml = data.tableHtml;
+                    }
+                    
+                    if (tableHtml) {
+                        titleDiv.textContent = canvasTitle;
+                        contentDiv.innerHTML = tableHtml;
+                    } else {
+                        contentDiv.innerHTML = '<div class="error">No table HTML found in the data.</div>';
+                    }
+                } catch (e) {
+                    contentDiv.innerHTML = '<div class="error">Error parsing JSON: ' + e.message + '</div>';
+                }
+                return;
+            }
+            
+            // No parameters provided
+            contentDiv.innerHTML = '<div class="error">No data provided. Please use one of these URL formats:<br><br>' +
+                '1. ?html=&lt;url-encoded-html&gt;<br>' +
+                '2. ?encoded=&lt;base64-encoded-json&gt;<br>' +
+                '3. ?data=&lt;url-encoded-json&gt;<br><br>' +
+                'Optional: &title=&lt;table-title&gt;</div>';
+        })();
+    </script>
+</body>
+</html>
