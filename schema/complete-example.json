@@ -1,0 +1,54 @@
+{
+  "messages": [
+    {
+      "id": "msg-001",
+      "role": "agent",
+      "content": "Hello! I'm your AI agent. I can help you analyze data and display results in the canvas panel. Try asking me to show you some company data!",
+      "timestamp": "10:30 AM"
+    },
+    {
+      "id": "msg-002",
+      "role": "user",
+      "content": "Show me the company revenue data for this quarter",
+      "timestamp": "10:31 AM"
+    },
+    {
+      "id": "msg-003",
+      "role": "agent",
+      "content": "I've analyzed the company data and prepared a comprehensive table for you. Opening it in the canvas panel now.",
+      "timestamp": "10:31 AM",
+      "tableHtml": "<div style=\"padding: 16px;\"><h3 style=\"margin-top: 0; color: hsl(222.2 84% 4.9%);\">Q4 Revenue Report</h3><table style=\"width: 100%; border-collapse: collapse; margin-top: 12px;\"><thead><tr style=\"background-color: hsl(210 40% 96.1%);\"><th style=\"padding: 12px; text-align: left; border-bottom: 2px solid hsl(214.3 31.8% 91.4%);\">ID</th><th style=\"padding: 12px; text-align: left; border-bottom: 2px solid hsl(214.3 31.8% 91.4%);\">Name</th><th style=\"padding: 12px; text-align: left; border-bottom: 2px solid hsl(214.3 31.8% 91.4%);\">Status</th><th style=\"padding: 12px; text-align: right; border-bottom: 2px solid hsl(214.3 31.8% 91.4%);\">Revenue</th><th style=\"padding: 12px; text-align: right; border-bottom: 2px solid hsl(214.3 31.8% 91.4%);\">Growth</th></tr></thead><tbody><tr><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">#001</td><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">Acme Corp</td><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\"><span style=\"color: hsl(142 70% 50%); font-weight: 500;\">Active</span></td><td style=\"padding: 10px; text-align: right; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">$1,234,567</td><td style=\"padding: 10px; text-align: right; border-bottom: 1px solid hsl(214.3 31.8% 91.4%); color: hsl(142 70% 50%);\">+12.5%</td></tr><tr><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">#002</td><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">Globex Inc</td><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\"><span style=\"color: hsl(142 70% 50%); font-weight: 500;\">Active</span></td><td style=\"padding: 10px; text-align: right; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">$892,341</td><td style=\"padding: 10px; text-align: right; border-bottom: 1px solid hsl(214.3 31.8% 91.4%); color: hsl(142 70% 50%);\">+8.2%</td></tr><tr><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">#003</td><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">Initech</td><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\"><span style=\"color: hsl(45 90% 50%); font-weight: 500;\">Pending</span></td><td style=\"padding: 10px; text-align: right; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">$456,789</td><td style=\"padding: 10px; text-align: right; border-bottom: 1px solid hsl(214.3 31.8% 91.4%); color: hsl(142 70% 50%);\">+3.1%</td></tr><tr><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">#004</td><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">Umbrella LLC</td><td style=\"padding: 10px; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\"><span style=\"color: hsl(0 70% 55%); font-weight: 500;\">Inactive</span></td><td style=\"padding: 10px; text-align: right; border-bottom: 1px solid hsl(214.3 31.8% 91.4%);\">$234,567</td><td style=\"padding: 10px; text-align: right; border-bottom: 1px solid hsl(214.3 31.8% 91.4%); color: hsl(0 70% 55%);\">-2.4%</td></tr><tr><td style=\"padding: 10px;\">#005</td><td style=\"padding: 10px;\">Stark Industries</td><td style=\"padding: 10px;\"><span style=\"color: hsl(142 70% 50%); font-weight: 500;\">Active</span></td><td style=\"padding: 10px; text-align: right;\">$5,678,901</td><td style=\"padding: 10px; text-align: right; color: hsl(142 70% 50%);\">+24.7%</td></tr></tbody></table></div>",
+      "metadata": {
+        "canvasTitle": "Company Revenue Data",
+        "isTyping": false
+      }
+    },
+    {
+      "id": "msg-004",
+      "role": "user",
+      "content": "Can you show me a breakdown by region?",
+      "timestamp": "10:32 AM"
+    },
+    {
+      "id": "msg-005",
+      "role": "agent",
+      "content": "Here's the regional breakdown:",
+      "timestamp": "10:32 AM",
+      "tableHtml": "<div style=\"padding: 16px;\"><h3 style=\"margin-top: 0;\">Regional Revenue Breakdown</h3><table style=\"width: 100%; border-collapse: collapse;\"><thead><tr style=\"background-color: hsl(210 40% 96.1%);\"><th style=\"padding: 12px; text-align: left;\">Region</th><th style=\"padding: 12px; text-align: right;\">Revenue</th><th style=\"padding: 12px; text-align: right;\">% of Total</th></tr></thead><tbody><tr><td style=\"padding: 10px;\">North America</td><td style=\"padding: 10px; text-align: right;\">$3,500,000</td><td style=\"padding: 10px; text-align: right;\">45%</td></tr><tr><td style=\"padding: 10px;\">Europe</td><td style=\"padding: 10px; text-align: right;\">$2,200,000</td><td style=\"padding: 10px; text-align: right;\">28%</td></tr><tr><td style=\"padding: 10px;\">Asia Pacific</td><td style=\"padding: 10px; text-align: right;\">$1,800,000</td><td style=\"padding: 10px; text-align: right;\">23%</td></tr><tr><td style=\"padding: 10px;\">Other</td><td style=\"padding: 10px; text-align: right;\">$300,000</td><td style=\"padding: 10px; text-align: right;\">4%</td></tr></tbody></table></div>",
+      "metadata": {
+        "canvasTitle": "Regional Breakdown"
+      }
+    }
+  ],
+  "initialState": {
+    "isCanvasOpen": false,
+    "canvasTitle": "Company Data"
+  },
+  "config": {
+    "agentName": "AI Agent",
+    "agentStatus": "Online • Ready to assist",
+    "placeholder": "Type your message... (Press Enter to send, Shift+Enter for new line)",
+    "showCanvasToggle": true,
+    "canvasWidth": "24rem"
+  }
+}

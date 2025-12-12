@@ -1,0 +1,38 @@
+{
+  "messages": [
+    {
+      "id": "1",
+      "role": "agent",
+      "content": "Hello! I'm your AI agent. I can help you analyze data and display results in the canvas panel. Try asking me to show you some company data!",
+      "timestamp": "10:30 AM"
+    },
+    {
+      "id": "2",
+      "role": "user",
+      "content": "Show me the company revenue data",
+      "timestamp": "10:31 AM"
+    },
+    {
+      "id": "3",
+      "role": "agent",
+      "content": "I've analyzed the company data and prepared a table for you. Opening it in the canvas panel now.",
+      "timestamp": "10:31 AM",
+      "tableHtml": "<table><thead><tr><th>ID</th><th>Name</th><th>Status</th><th>Revenue</th><th>Growth</th></tr></thead><tbody><tr><td>#001</td><td>Acme Corp</td><td><span style=\"color: hsl(142 70% 50%)\">Active</span></td><td>$1,234,567</td><td>+12.5%</td></tr><tr><td>#002</td><td>Globex Inc</td><td><span style=\"color: hsl(142 70% 50%)\">Active</span></td><td>$892,341</td><td>+8.2%</td></tr><tr><td>#003</td><td>Initech</td><td><span style=\"color: hsl(45 90% 50%)\">Pending</span></td><td>$456,789</td><td>+3.1%</td></tr></tbody></table>",
+      "metadata": {
+        "canvasTitle": "Company Revenue Data",
+        "isTyping": false
+      }
+    }
+  ],
+  "initialState": {
+    "isCanvasOpen": false,
+    "canvasTitle": "Company Data"
+  },
+  "config": {
+    "agentName": "AI Agent",
+    "agentStatus": "Online • Ready to assist",
+    "placeholder": "Type your message... (Press Enter to send, Shift+Enter for new line)",
+    "showCanvasToggle": true,
+    "canvasWidth": "24rem"
+  }
+}

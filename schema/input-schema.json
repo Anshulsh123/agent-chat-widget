@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentChatWindow Input Schema",
+  "description": "Schema for input data to render agent chat window with messages and canvas content",
+  "type": "object",
+  "properties": {
+    "messages": {
+      "type": "array",
+      "description": "Array of chat messages",
+      "items": {
+        "type": "object",
+        "required": ["id", "role", "content", "timestamp"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the message"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["user", "agent"],
+            "description": "Role of the message sender"
+          },
+          "content": {
+            "type": "string",
+            "description": "Text content of the message"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Timestamp in format 'HH:MM AM/PM' or ISO 8601 format",
+            "examples": ["10:30 AM", "2024-12-12T10:30:00Z"]
+          },
+          "tableHtml": {
+            "type": "string",
+            "description": "Optional HTML content (table, chart, etc.) to display in canvas panel"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Optional metadata for the message",
+            "properties": {
+              "isTyping": {
+                "type": "boolean",
+                "description": "Whether the agent is currently typing"
+              },
+              "canvasTitle": {
+                "type": "string",
+                "description": "Title for the canvas panel when this message has tableHtml"
+              },
+              "actions": {
+                "type": "array",
+                "description": "Optional action buttons for the message",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "action": {
+                      "type": "string"
+                    },
+                    "payload": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "initialState": {
+      "type": "object",
+      "description": "Initial state configuration",
+      "properties": {
+        "isCanvasOpen": {
+          "type": "boolean",
+          "description": "Whether canvas panel should be open initially",
+          "default": false
+        },
+        "canvasContent": {
+          "type": "string",
+          "description": "Initial HTML content for canvas panel"
+        },
+        "canvasTitle": {
+          "type": "string",
+          "description": "Title for the canvas panel",
+          "default": "Canvas"
+        }
+      }
+    },
+    "config": {
+      "type": "object",
+      "description": "Component configuration",
+      "properties": {
+        "agentName": {
+          "type": "string",
+          "description": "Display name for the AI agent",
+          "default": "AI Agent"
+        },
+        "agentStatus": {
+          "type": "string",
+          "description": "Status text for the agent",
+          "default": "Online • Ready to assist"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text for input field",
+          "default": "Type your message... (Press Enter to send, Shift+Enter for new line)"
+        },
+        "showCanvasToggle": {
+          "type": "boolean",
+          "description": "Whether to show canvas toggle button",
+          "default": true
+        },
+        "canvasWidth": {
+          "type": "string",
+          "description": "Width of canvas panel (CSS value)",
+          "default": "24rem"
+        }
+      }
+    }
+  },
+  "required": ["messages"]
+}
